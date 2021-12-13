@@ -14,6 +14,7 @@ export enum RequestType {
     CHECKOUT = 'checkout',
     SIGN_MESSAGE = 'sign-message',
     SIGN_TRANSACTION = 'sign-transaction',
+    SIGN_STAKING = 'sign-staking',
     ONBOARD = 'onboard',
     SIGNUP = 'signup',
     LOGIN = 'login',
@@ -65,13 +66,18 @@ export interface ChooseAddressResult extends Address {
 export interface SignTransactionRequest extends BasicRequest {
     sender: string;
     recipient: string;
-    recipientType?: Nimiq.Account.Type;
+    recipientType?: Nimiq.Account.Type | 3;
     recipientLabel?: string;
     value: number;
     fee?: number;
     extraData?: Uint8Array | string;
     flags?: number;
     validityStartHeight: number; // FIXME To be made optional when hub has its own network
+}
+
+export interface SignStakingRequest extends SignTransactionRequest {
+    type: number;
+    delegation?: string;
 }
 
 export interface NimiqCheckoutRequest extends BasicRequest {
@@ -204,7 +210,7 @@ export interface SignedTransaction {
         sender: string; // Userfriendly address
         senderType: Nimiq.Account.Type;
         recipient: string; // Userfriendly address
-        recipientType: Nimiq.Account.Type;
+        recipientType: Nimiq.Account.Type | 3;
         value: number; // Luna
         fee: number; // Luna
         validityStartHeight: number;
@@ -538,6 +544,7 @@ export interface AddBtcAddressesResult {
 }
 
 export type RpcRequest = SignTransactionRequest
+                       | SignStakingRequest
                        | CreateCashlinkRequest
                        | ManageCashlinkRequest
                        | CheckoutRequest
@@ -574,6 +581,7 @@ export type ResultByRequestType<T> =
     T extends RequestType.LIST_CASHLINKS ? Cashlink[] :
     T extends RequestType.CHOOSE_ADDRESS | RequestType.ADD_ADDRESS ? Address :
     T extends RequestType.SIGN_TRANSACTION ? SignedTransaction :
+    T extends RequestType.SIGN_STAKING ? SignedTransaction :
     T extends RequestType.CHECKOUT ? SignedTransaction | SimpleResult :
     T extends RequestType.SIGN_MESSAGE ? SignedMessage :
     T extends RequestType.LOGOUT | RequestType.CHANGE_PASSWORD ? SimpleResult :
