@@ -22,5 +22,8 @@ module.exports = {
   testMatch: [
     '**/tests/unit/**/*.spec.(js|ts)|**/__tests__/*.(js|ts)'
   ],
+  modulePathIgnorePatterns: [
+    'deployment-hub',
+  ],
   testURL: 'http://localhost/'
 }

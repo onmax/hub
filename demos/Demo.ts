@@ -55,17 +55,17 @@ class Demo {
                 console.log('Hub result', result);
                 console.log('State', state);
 
-                document.querySelector('#result').textContent = JSON.stringify(result);
+                document.querySelector('#result')!.textContent = JSON.stringify(result);
             }, (error: Error, state: State) => {
                 console.error('Hub error', error);
                 console.log('State', state);
 
-                document.querySelector('#result').textContent = `Error: ${error.message || error}`;
+                document.querySelector('#result')!.textContent = `Error: ${error.message || error}`;
             });
         });
         demo.client.checkRedirectResponse();
 
-        document.querySelectorAll('input[name="popup-vs-redirect"]').forEach((input: HTMLInputElement) => {
+        document.querySelectorAll('input[name="popup-vs-redirect"]').forEach((input) => {
             input.addEventListener('change', (event) => {
                 const value = (event.target as HTMLInputElement).value;
                 demo.setClientBehavior(value);
@@ -74,11 +74,11 @@ class Demo {
         demo.setClientBehavior(
             (document.querySelector('input[name="popup-vs-redirect"]:checked') as HTMLInputElement).value);
 
-        document.querySelector('button#checkout').addEventListener('click', async () => {
+        document.querySelector('button#checkout')!.addEventListener('click', async () => {
             await checkout(await generateCheckoutRequest());
         });
 
-        document.querySelector('button#multi-checkout').addEventListener('click', async () => {
+        document.querySelector('button#multi-checkout')!.addEventListener('click', async () => {
             await checkout(await generateCheckoutRequest(/* multiCheckout */ true));
         });
 
@@ -98,7 +98,7 @@ class Demo {
             themeSelector.add(option);
         });
 
-        document.querySelector('button#create-cashlink').addEventListener('click', async () => {
+        document.querySelector('button#create-cashlink')!.addEventListener('click', async () => {
             try {
                 let value: number | undefined =
                     parseInt((document.querySelector('#cashlink-value') as HTMLInputElement).value);
@@ -150,39 +150,39 @@ class Demo {
 
                 const result = await demo.client.createCashlink(request, demo._defaultBehavior as PopupRequestBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = `Cashlink created${result.link
+                document.querySelector('#result')!.textContent = `Cashlink created${result.link
                     ? `: ${result.link}`
                     : ''
                 }`;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#choose-address').addEventListener('click', async () => {
+        document.querySelector('button#choose-address')!.addEventListener('click', async () => {
             try {
                 const result = await demo.client.chooseAddress({ appName: 'Hub Demos', ui: 2 }, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = `Address was chosen: ${result ? result.address : '-'}`;
+                document.querySelector('#result')!.textContent = `Address was chosen: ${result ? result.address : '-'}`;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#choose-address-and-btc').addEventListener('click', async () => {
+        document.querySelector('button#choose-address-and-btc')!.addEventListener('click', async () => {
             try {
                 const result = await demo.client.chooseAddress({ appName: 'Hub Demos', returnBtcAddress: true, ui: 2 }, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = `Address was chosen: ${result ? result.address : '-'}`;
+                document.querySelector('#result')!.textContent = `Address was chosen: ${result ? result.address : '-'}`;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#sign-transaction').addEventListener('click', async () => {
+        document.querySelector('button#sign-transaction')!.addEventListener('click', async () => {
             const txRequest = generateSignTransactionRequest();
             try {
                 const result = await demo.client.signTransaction(
@@ -192,43 +192,43 @@ class Demo {
                     demo._defaultBehavior,
                 );
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'TX signed';
+                document.querySelector('#result')!.textContent = 'TX signed';
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#onboard').addEventListener('click', async () => {
+        document.querySelector('button#onboard')!.addEventListener('click', async () => {
             try {
                 const result = await demo.client.onboard({ appName: 'Hub Demos' }, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'Onboarding completed!';
+                document.querySelector('#result')!.textContent = 'Onboarding completed!';
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#create').addEventListener('click', async () => {
+        document.querySelector('button#create')!.addEventListener('click', async () => {
             try {
                 const result = await demo.client.signup({ appName: 'Hub Demos' }, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'New account & address created';
+                document.querySelector('#result')!.textContent = 'New account & address created';
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#login').addEventListener('click', async () => {
+        document.querySelector('button#login')!.addEventListener('click', async () => {
             try {
                 const result = await demo.client.login({ appName: 'Hub Demos' }, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'Account imported';
+                document.querySelector('#result')!.textContent = 'Account imported';
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
@@ -238,7 +238,7 @@ class Demo {
                 alert('You have no account to send a tx from, create an account first (signup)');
                 throw new Error('No account found');
             }
-            const sender = ($radio as HTMLElement).dataset.address;
+            const sender = ($radio as HTMLElement).dataset.address!;
             const value = parseInt((document.querySelector('#value') as HTMLInputElement).value, 10) || 1337;
             const fee = parseInt((document.querySelector('#fee') as HTMLInputElement).value, 10) || 0;
             const txData = (document.querySelector('#data') as HTMLInputElement).value || '';
@@ -346,14 +346,14 @@ class Demo {
             try {
                 const result = await demo.client.checkout(txRequest, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'TX signed';
+                document.querySelector('#result')!.textContent = 'TX signed';
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         }
 
-        document.querySelector('button#sign-message').addEventListener('click', async () => {
+        document.querySelector('button#sign-message')!.addEventListener('click', async () => {
             const request: SignMessageRequest = {
                 appName: 'Hub Demos',
                 // signer: 'NQ63 U7XG 1YYE D6FA SXGG 3F5H X403 NBKN JLDU',
@@ -362,14 +362,14 @@ class Demo {
             try {
                 const result = await demo.client.signMessage(request, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'MSG signed: ' + request.message;
+                document.querySelector('#result')!.textContent = 'MSG signed: ' + request.message;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#sign-message-with-account').addEventListener('click', async () => {
+        document.querySelector('button#sign-message-with-account')!.addEventListener('click', async () => {
             const $radio = document.querySelector('input[name="address"]:checked');
             if (!$radio) {
                 alert('You have no account to sign a message by, create an account first (signup)');
@@ -386,14 +386,14 @@ class Demo {
             try {
                 const result = await demo.client.signMessage(request, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'MSG signed: ' + request.message;
+                document.querySelector('#result')!.textContent = 'MSG signed: ' + request.message;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#sign-message-with-tabs').addEventListener('click', async () => {
+        document.querySelector('button#sign-message-with-tabs')!.addEventListener('click', async () => {
             const $radio = document.querySelector('input[name="address"]:checked');
             const signer = $radio && ($radio as HTMLElement).dataset.address || undefined;
 
@@ -406,21 +406,21 @@ class Demo {
             try {
                 const result = await demo.client.signMessage(request, demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'MSG signed: ' + request.message;
+                document.querySelector('#result')!.textContent = 'MSG signed: ' + request.message;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#migrate').addEventListener('click', async () => {
+        document.querySelector('button#migrate')!.addEventListener('click', async () => {
             try {
                 const result = await demo.client.migrate(demo._defaultBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'Migrated';
+                document.querySelector('#result')!.textContent = 'Migrated';
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
@@ -459,7 +459,7 @@ class Demo {
             }
         });
 
-        document.querySelector('button#sign-btc-transaction').addEventListener('click', async () => {
+        document.querySelector('button#sign-btc-transaction')!.addEventListener('click', async () => {
             const $radio = document.querySelector('input[name="address"]:checked');
             if (!$radio) {
                 alert('You have no account to send a tx from, create an account first (signup)');
@@ -503,14 +503,14 @@ class Demo {
             try {
                 const result = await demo.client.signBtcTransaction(txRequest, demo._defaultBehavior as PopupRequestBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').textContent = 'Signed: ' + result.serializedTx;
+                document.querySelector('#result')!.textContent = 'Signed: ' + result.serializedTx;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#setup-swap.nim-to-btc').addEventListener('click', async () => {
+        document.querySelector('button#setup-swap.nim-to-btc')!.addEventListener('click', async () => {
             // const $radio = document.querySelector('input[name="address"]:checked');
             // if (!$radio) {
             //     alert('You have no account to send a tx from, create an account first (signup)');
@@ -580,11 +580,11 @@ class Demo {
                 document.querySelector('#result').innerHTML = `Signed successfully!<br>NIM:&nbsp;${result.nim.serializedTx}<br>BTC:&nbsp;${result.btc.serializedTx}`;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
-        document.querySelector('button#setup-swap.btc-to-nim').addEventListener('click', async () => {
+        document.querySelector('button#setup-swap.btc-to-nim')!.addEventListener('click', async () => {
             // const $radio = document.querySelector('input[name="address"]:checked');
             // if (!$radio) {
             //     alert('You have no account to send a tx from, create an account first (signup)');
@@ -654,10 +654,10 @@ class Demo {
             try {
                 const result = await demo.client.setupSwap(request, demo._defaultBehavior as PopupRequestBehavior);
                 console.log('Result', result);
-                document.querySelector('#result').innerHTML = `Signed successfully!<br>NIM:&nbsp;${result.nim.serializedTx}<br>BTC:&nbsp;${result.btc.serializedTx}`;
+                document.querySelector('#result')!.innerHTML = `Signed successfully!<br>NIM:&nbsp;${result.nim.serializedTx}<br>BTC:&nbsp;${result.btc.serializedTx}`;
             } catch (e) {
                 console.error(e);
-                document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+                document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
             }
         });
 
@@ -695,10 +695,10 @@ class Demo {
             }
         });
 
-        document.querySelector('button#list-keyguard-keys').addEventListener('click', () => demo.listKeyguard());
-        document.querySelector('button#setup-legacy-accounts').addEventListener('click',
+        document.querySelector('button#list-keyguard-keys')!.addEventListener('click', () => demo.listKeyguard());
+        document.querySelector('button#setup-legacy-accounts')!.addEventListener('click',
             () => demo.setupLegacyAccounts());
-        document.querySelector('button#list-accounts').addEventListener('click', async () => demo.updateAccounts());
+        document.querySelector('button#list-accounts')!.addEventListener('click', async () => demo.updateAccounts());
 
         document.querySelectorAll('button').forEach((button) => button.disabled = false);
         (document.querySelector('button#list-accounts') as HTMLButtonElement).click();
@@ -733,10 +733,10 @@ class Demo {
                 this._defaultBehavior,
             );
             console.log('Result', result);
-            document.querySelector('#result').textContent = 'Successfully changed Password';
+            document.querySelector('#result')!.textContent = 'Successfully changed Password';
         } catch (e) {
             console.error(e);
-            document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+            document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
         }
     }
 
@@ -754,10 +754,10 @@ class Demo {
                 this._defaultBehavior,
             );
             console.log('Result', result);
-            document.querySelector('#result').textContent = 'Account added';
+            document.querySelector('#result')!.textContent = 'Account added';
         } catch (e) {
             console.error(e);
-            document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+            document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
         }
     }
 
@@ -775,10 +775,10 @@ class Demo {
                 this._defaultBehavior,
             );
             console.log('Result', result);
-            document.querySelector('#result').textContent = 'Done renaming account';
+            document.querySelector('#result')!.textContent = 'Done renaming account';
         } catch (e) {
             console.error(e);
-            document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+            document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
         }
     }
 
@@ -925,7 +925,7 @@ class Demo {
         const client = await this.startIframeClient(this._keyguardBaseUrl);
         const keys = await client.call('list');
         console.log('Keys in Keyguard:', keys);
-        document.querySelector('#result').textContent = 'Keys listed in console';
+        document.querySelector('#result')!.textContent = 'Keys listed in console';
         return keys;
     }
 
@@ -938,7 +938,7 @@ class Demo {
         // @ts-ignore Property '_target' is private and only accessible within class 'PostMessageRpcClient'.
         client._target.close();
         console.log('Legacy Account setup:', result);
-        document.querySelector('#result').textContent = 'Legacy account stored';
+        document.querySelector('#result')!.textContent = 'Legacy account stored';
     }
 
     public async list(): Promise<Account[]> {
@@ -953,11 +953,11 @@ class Demo {
         try {
             const result = await this.client.logout(this._createLogoutRequest(accountId), this._defaultBehavior as PopupRequestBehavior);
             console.log('Result', result);
-            document.querySelector('#result').textContent = 'Account removed';
+            document.querySelector('#result')!.textContent = 'Account removed';
             return result;
         } catch (e) {
             console.error(e);
-            document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+            document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
         }
     }
 
@@ -996,17 +996,17 @@ class Demo {
             const result = await this.client.export(request, this._defaultBehavior as PopupRequestBehavior);
             console.log('Result', result);
             if (result.fileExported) {
-                document.querySelector('#result').textContent = result.wordsExported
+                document.querySelector('#result')!.textContent = result.wordsExported
                     ? 'Export sucessful'
                     : 'File exported';
             } else {
-                document.querySelector('#result').textContent = result.wordsExported
+                document.querySelector('#result')!.textContent = result.wordsExported
                     ? 'Words exported'
                     : 'nothing exported';
             }
         } catch (e) {
             console.error(e);
-            document.querySelector('#result').textContent = `Error: ${e.message || e}`;
+            document.querySelector('#result')!.textContent = `Error: ${e.message || e}`;
         }
     }
 
