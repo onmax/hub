@@ -91,7 +91,7 @@ export interface ChooseAddressResult extends Address {
 }
 
 export interface SignTransactionRequest extends BasicRequest {
-    sender: string;
+    sender?: string;
     recipient: string;
     recipientType?: Nimiq.AccountType;
     recipientLabel?: string;

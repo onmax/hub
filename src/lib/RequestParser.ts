@@ -69,7 +69,9 @@ export class RequestParser {
                 return {
                     kind: requestType,
                     appName: signTransactionRequest.appName,
-                    sender: Nimiq.Address.fromString(signTransactionRequest.sender),
+                    sender: signTransactionRequest.sender
+                        ? Nimiq.Address.fromString(signTransactionRequest.sender)
+                        : undefined,
                     recipient: Nimiq.Address.fromString(signTransactionRequest.recipient),
                     recipientType: signTransactionRequest.recipientType || Nimiq.AccountType.Basic,
                     recipientLabel: signTransactionRequest.recipientLabel,
@@ -756,10 +758,13 @@ export class RequestParser {
                 const signTransactionRequest = request as ParsedSignTransactionRequest;
                 return {
                     appName: signTransactionRequest.appName,
-                    sender: signTransactionRequest.sender instanceof Nimiq.Address
-                        ? signTransactionRequest.sender.toUserFriendlyAddress()
-                        // Note: additional sender information is lost and does not survive reloads, see RequestTypes.ts
-                        : signTransactionRequest.sender.address.toUserFriendlyAddress(),
+                    sender: signTransactionRequest.sender
+                        ? signTransactionRequest.sender instanceof Nimiq.Address
+                            ? signTransactionRequest.sender.toUserFriendlyAddress()
+                            // Note: additional sender information is lost and does not survive reloads,
+                            // see RequestTypes.ts
+                            : signTransactionRequest.sender.address.toUserFriendlyAddress()
+                        : undefined,
                     recipient: signTransactionRequest.recipient.toUserFriendlyAddress(),
                     recipientType: signTransactionRequest.recipientType,
                     recipientLabel: signTransactionRequest.recipientLabel,

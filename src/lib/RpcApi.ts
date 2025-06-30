@@ -32,6 +32,7 @@ import { ERROR_CANCELED, StakingTransactionType, WalletType } from './Constants'
 import { includesOrigin } from '@/lib/Helpers';
 import Config from 'config';
 import { setHistoryStorage, getHistoryStorage } from '@/lib/Helpers';
+import type { WalletInfo } from './WalletInfo';
 
 export default class RpcApi {
     private static get HISTORY_KEY_RPC_STATE() {
@@ -304,7 +305,7 @@ export default class RpcApi {
             }
         }
 
-        let account;
+        let account: WalletInfo | null | undefined;
         // Simply testing if the property exists (with `'walletId' in request`) is not enough,
         // as `undefined` also counts as existing.
         if (request) {
@@ -317,12 +318,14 @@ export default class RpcApi {
                 account = await WalletStore.Instance.get((request as ParsedSimpleRequest).walletId);
                 errorMsg = 'AccountId not found';
             } else if (requestType === RequestType.SIGN_TRANSACTION) {
-                accountRequired = true;
+                accountRequired = false;
                 const parsedSignTransactionRequest = request as ParsedSignTransactionRequest;
-                const address = parsedSignTransactionRequest.sender instanceof Nimiq.Address
-                    ? parsedSignTransactionRequest.sender
-                    : parsedSignTransactionRequest.sender.address;
-                account = this._store.getters.findWalletByAddress(address.toUserFriendlyAddress(), true);
+                if (parsedSignTransactionRequest.sender) {
+                    const address = parsedSignTransactionRequest.sender instanceof Nimiq.Address
+                        ? parsedSignTransactionRequest.sender
+                        : parsedSignTransactionRequest.sender.address;
+                    account = this._store.getters.findWalletByAddress(address.toUserFriendlyAddress(), true);
+                }
             } else if (requestType === RequestType.SIGN_STAKING) {
                 accountRequired = true;
                 // Only support signing staking transactions by the tx's sender or recipient. Note that sending to or
